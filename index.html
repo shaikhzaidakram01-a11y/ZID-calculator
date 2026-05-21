@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ZAID NEXUS PRO</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: radial-gradient(circle, #1a1a2e, #0f0f1b); color: #fff; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+        /* Cyberpunk Top Header Nav */
+        .app-header { background: rgba(0,0,0,0.4); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #00f2fe44; }
+        .nav-tabs { display: flex; gap: 8px; }
+        .tab-btn { background: #1a1a2e; border: 1px solid #00f2fe55; color: #fff; padding: 8px 16px; border-radius: 10px; font-size: 0.8rem; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .tab-btn.active { background: #00f2fe; color: #000; box-shadow: 0 0 15px #00f2fe; border-color: #00f2fe; }
+        
+        .main-container { flex: 1; padding: 20px; overflow-y: auto; }
+        .app-section { display: none; }
+        .app-section.active { display: block; }
+
+        /* ULTRA GLOW FUTURISTIC CALCULATOR */
+        .calculator { background: rgba(255,255,255,0.04); border: 2px solid #00f2fe44; border-radius: 30px; padding: 25px; max-width: 330px; margin: auto; box-shadow: 0 0 30px rgba(0,242,254,0.15); }
+        .screen { background: #000; padding: 22px; border-radius: 20px; text-align: right; margin-bottom: 25px; border: 1px solid #ff0080; position: relative; overflow: hidden; }
+        #res { font-size: 2.6rem; color: #00f2fe; text-shadow: 0 0 15px #00f2fe; min-height: 3.5rem; line-height: 3.5rem; word-break: break-all; }
+        .laser { position: absolute; bottom: 0; left: -100%; width: 100%; height: 4px; background: linear-gradient(90deg, transparent, #ff0080, #00f2fe, transparent); }
+        .animate { animation: scan 0.3s ease-out; }
+        @keyframes scan { 0% { left: -100%; } 100% { left: 100%; } }
+
+        .btns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .btn { height: 62px; border-radius: 18px; border: none; font-size: 1.5rem; background: rgba(255,255,255,0.08); color: #fff; cursor: pointer; transition: 0.1s; }
+        .btn:active { background: #00f2fe; color: #000; transform: scale(0.92); box-shadow: 0 0 20px #00f2fe; }
+
+        /* GRAND FEATURES & MEGA HUB UTILITIES GRID */
+        .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding-bottom: 20px; }
+        .hub-title { color: #00f2fe; text-shadow: 0 0 10px #00f2fe; font-size: 1.1rem; margin: 15px 0 10px 0; grid-column: span 2; border-left: 3px solid #ff0080; padding-left: 8px; }
+        .card { background: rgba(255,255,255,0.04); padding: 18px; border-radius: 16px; text-align: center; border: 1px solid #00f2fe55; color: #00f2fe; font-weight: bold; font-size: 0.85rem; transition: 0.2s; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 75px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); cursor: pointer; }
+        .card:active { transform: scale(0.95); box-shadow: 0 0 15px #00f2fe; border-color: #00f2fe; color: #fff; }
+
+        /* 🚨 CYBERPUNK INTERSTITIAL INDUSTRIAL AD LOADER SCREEN */
+        #adOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,15,27,0.98); z-index: 9999; display: none; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .spinner { width: 50px; height: 50px; border: 5px solid rgba(0,242,254,0.1); border-top: 5px solid #00f2fe; border-radius: 50%; animation: spin 1s linear infinite; box-shadow: 0 0 15px #00f2fe; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .ad-zone { width: 100%; height: 55px; background: #000; display: flex; justify-content: center; align-items: center; border-top: 1px solid #00f2fe33; }
+    </style>
+</head>
+<body>
+
+    <div id="adOverlay">
+        <div class="spinner"></div>
+        <h3 style="color: #00f2fe; margin-top: 20px; text-shadow: 0 0 10px #00f2fe; letter-spacing: 1px;">INITIALIZING SECURE AD LINK...</h3>
+        <p style="color: #ff0080; font-size: 0.85rem; margin-top: 5px;" id="adCountdown">Loading in 3 seconds</p>
+    </div>
+
+    <header class="app-header">
+        <div style="font-weight:bold; color:#00f2fe; font-size: 1rem; letter-spacing: 1px;">ZAID NEXUS PRO</div>
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="show('calc', this)">Calculator</button>
+            <button class="tab-btn" onclick="show('nexus-hub', this)">Nexus Hub</button>
+        </div>
+    </header>
+
+    <main class="main-container">
+        
+        <div id="calc" class="app-section active">
+            <div class="calculator">
+                <div class="screen">
+                    <div id="res">0</div>
+                    <div class="laser" id="laser"></div>
+                </div>
+                <div class="btns">
+                    <button class="btn" onclick="press('C')">C</button>
+                    <button class="btn" onclick="press('/')">/</button>
+                    <button class="btn" onclick="press('*')">×</button>
+                    <button class="btn" onclick="press('⌫')">⌫</button>
+                    <button class="btn" onclick="press('7')">7</button><button class="btn" onclick="press('8')">8</button><button class="btn" onclick="press('9')">9</button><button class="btn" onclick="press('-')">-</button>
+                    <button class="btn" onclick="press('4')">4</button><button class="btn" onclick="press('5')">5</button><button class="btn" onclick="press('6')">6</button><button class="btn" onclick="press('+')">+</button>
+                    <button class="btn" onclick="press('1')">1</button><button class="btn" onclick="press('2')">2</button><button class="btn" onclick="press('3')">3</button><button class="btn" style="background:#00f2fe; color:#000; font-weight: bold;" onclick="press('=')">=</button>
+                    <button class="btn" style="grid-column: span 2;" onclick="press('0')">0</button><button class="btn" onclick="press('.')">.</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="nexus-hub" class="app-section">
+            <div class="hub-grid">
+                
+                <div class="hub-title">🤖 Advanced AI Zone</div>
+                <div class="card" onclick="triggerAdRoute('https://gemini.google.com')">Gemini AI PRO</div>
+                <div class="card" onclick="triggerAdRoute('https://chatgpt.com')">ChatGPT Web</div>
+                <div class="card" onclick="triggerAdRoute('https://blackbox.ai')">Blackbox Code AI</div>
+                <div class="card" onclick="triggerAdRoute('https://deepl.com')">DeepL AI Translator</div>
+
+                <div class="hub-title">⚡ High Utility Public Tools</div>
+                <div class="card" onclick="triggerAdRoute('https://www.google.com')">🔍 Google Search</div>
+                <div class="card" onclick="triggerAdRoute('https://fast.com')">🚀 Net Speed Checker</div>
+                <div class="card" onclick="triggerAdRoute('https://temp-mail.org')">✉️ Temp Mail Engine</div>
+                <div class="card" onclick="triggerAdRoute('https://www.ilovepdf.com')">📄 PDF Utilities Pro</div>
+                <div class="card" onclick="triggerAdRoute('https://wetransfer.com')">📂 Heavy File Share</div>
+                <div class="card" onclick="triggerAdRoute('https://virustotal.com')">🛡️ Cloud Virus Scanner</div>
+
+                <div class="hub-title">🎨 Content Creator Kits</div>
+                <div class="card" onclick="triggerAdRoute('https://www.instagram.com')">📸 Instagram Web</div>
+                <div class="card" onclick="triggerAdRoute('https://ssstik.io')">📥 Reels Downloader</div>
+                <div class="card" onclick="triggerAdRoute('https://www.canva.com')">🎨 Canva Graphics Web</div>
+                <div class="card" onclick="triggerAdRoute('https://www.remove.bg')">🖼️ AI BG Remover</div>
+                <div class="card" onclick="triggerAdRoute('https://ttsmp3.com')">🗣️ AI Voice Generator</div>
+                <div class="card" onclick="triggerAdRoute('https://pixabay.com')">📷 Free Stock Media</div>
+
+                <div class="hub-title">💻 Programming & Sports Cloud</div>
+                <div class="card" onclick="triggerAdRoute('https://poki.com')">🎮 Poki Arcade Games</div>
+                <div class="card" onclick="triggerAdRoute('https://www.crazygames.com')">🕹️ Free Web Games</div>
+                <div class="card" onclick="triggerAdRoute('https://replit.com/~')">💻 Cloud Code Compiler</div>
+                <div class="card" onclick="triggerAdRoute('https://github.com')">🐙 GitHub Dashboard</div>
+                <div class="card" onclick="triggerAdRoute('https://crunchyroll.com')">⛩️ Anime Streaming Hub</div>
+                <div class="card" onclick="triggerAdRoute('https://www.cricbuzz.com')">🏏 Live Sports Proxy</div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <div class="ad-zone"><span style="color:#00f2fe; font-size: 0.8rem; font-weight: bold; letter-spacing: 1px;">ADMOB BANNER SPACE</span></div>
+
+    <script>
+        var audioCtx = null;
+        const laser = document.getElementById('laser');
+        const res = document.getElementById('res');
+
+        // Safe Engine Core Initializer
+        function secureActivateAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // 🔊 HEAVY BOOM GHOOMTA HUA SYNTHETIC DROP CLICK ENGINE (0% Memory Overload)
+        function fireBhariClickSound(isEquals) {
+            if (!audioCtx) return;
+            try {
+                // Lower dynamic Sub-bass frequency sweep
+                var subOsc = audioCtx.createOscillator();
+                var subGain = audioCtx.createGain();
+                subOsc.type = 'sawtooth';
+                
+                var startFreq = isEquals ? 360 : 220;
+                var endFreq = isEquals ? 35 : 45;
+                
+                subOsc.frequency.setValueAtTime(startFreq, audioCtx.currentTime);
+                subOsc.frequency.exponentialRampToValueAtTime(endFreq, audioCtx.currentTime + 0.18);
+                
+                subGain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+                subGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.18);
+                subOsc.connect(subGain); subGain.connect(audioCtx.destination);
+                
+                // Robotic click snap
+                var clickOsc = audioCtx.createOscillator();
+                var clickGain = audioCtx.createGain();
+                clickOsc.type = 'square';
+                clickOsc.frequency.setValueAtTime(450, audioCtx.currentTime);
+                clickOsc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.05);
+                clickGain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                clickGain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+                clickOsc.connect(clickGain); clickGain.connect(audioCtx.destination);
+
+                subOsc.start(); subOsc.stop(audioCtx.currentTime + 0.18);
+                clickOsc.start(); clickOsc.stop(audioCtx.currentTime + 0.05);
+            } catch(e) {}
+        }
+
+        // Calculator Core Processing Unit
+        function press(val) {
+            secureActivateAudio();
+
+            if (navigator.vibrate) navigator.vibrate(val === '=' ? 85 : 35); // Bhari rumble feedback
+            fireBhariClickSound(val === '=');
+            
+            laser.classList.remove('animate');
+            void laser.offsetWidth;
+            laser.classList.add('animate');
+
+            if (val === 'C') {
+                res.innerText = '0';
+            } else if (val === '⌫') {
+                res.innerText = res.innerText.slice(0, -1) || '0';
+            } else if (val === '=') {
+                try {
+                    var computation = res.innerText.replace(/×/g, '*');
+                    res.innerText = eval(computation);
+                } catch(e) {
+                    res.innerText = 'ERROR';
+                }
+            } else {
+                if (res.innerText === '0' || res.innerText === 'ERROR') {
+                    res.innerText = val;
+                } else {
+                    res.innerText += val;
+                }
+            }
+        }
+
+        // Section Hub Switch Layout Engine
+        function show(id, btn) {
+            secureActivateAudio();
+            if (navigator.vibrate) navigator.vibrate(15);
+            document.querySelectorAll('.app-section').forEach(function(s) { s.classList.remove('active'); });
+            document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+            document.getElementById(id).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        // 🚨 Fixed Safe 3-Second Industrial Ad Routing (No Background Threads Blocks)
+        function triggerAdRoute(targetUrl) {
+            secureActivateAudio();
+            if (navigator.vibrate) navigator.vibrate(40);
+            
+            var overlay = document.getElementById('adOverlay');
+            var countdownText = document.getElementById('adCountdown');
+            if(overlay) overlay.style.display = 'flex'; // Full screen ad delay shield visible
+            
+            var timeLeft = 3;
+            if(countdownText) countdownText.innerText = "Loading in " + timeLeft + " seconds";
+
+            // Safe synchronized non-crashing hardware timers
+            setTimeout(function() {
+                timeLeft--;
+                if(countdownText) countdownText.innerText = "Loading in " + timeLeft + " seconds";
+                
+                setTimeout(function() {
+                    timeLeft--;
+                    if(countdownText) countdownText.innerText = "Loading in " + timeLeft + " seconds";
+                    
+                    setTimeout(function() {
+                        if(overlay) overlay.style.display = 'none'; // Unblock screen viewports
+                        window.open(targetUrl, '_blank'); // Open native link safely
+                    }, 1000);
+                }, 1000);
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
